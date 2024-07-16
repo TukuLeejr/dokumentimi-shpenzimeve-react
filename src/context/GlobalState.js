@@ -19,10 +19,20 @@ export const GlobalContext = createContext(initialState);
 //Provider component qe me mujt krejt files tjera me pas qasje te GlobalState
 
     export const GlobalProvider = ({children}) => {
-        const [state, /*dispatch*/] = useReducer(AppReducer, initialState);
+        const [state, dispatch] = useReducer(AppReducer, initialState);
+
+        //Actions that make calls to our Reducer
+        function deleteTransaction(id) {
+            dispatch({
+                type: 'DELETE_TRANSACTION',
+                payload: id
+            });
+        }
+
 
         return (<GlobalContext.Provider value={{
-            transactions: state.transactions
+            transactions: state.transactions,
+            deleteTransaction
         }}>
             {children}
         </GlobalContext.Provider>
